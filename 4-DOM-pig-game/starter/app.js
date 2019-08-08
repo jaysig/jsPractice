@@ -9,17 +9,9 @@ GAME RULES:
 
 */
 
-let scores = [0, 0];
-let roundScore = 0;
-let activePlayer = 0;
+let scores, roundScore, activePlayer;
 
-document.querySelector('.dice').style.display = 'none';
-
-document.getElementById('score-0').textContent = '0';
-document.getElementById('score-1').textContent = '0';
-
-document.getElementById('current-0').textContent = '0';
-document.getElementById('current-1').textContent = '0';
+init();
 
 document.querySelector('.btn-roll').addEventListener('click', () => {
 
@@ -33,13 +25,13 @@ document.querySelector('.btn-roll').addEventListener('click', () => {
         roundScore += dice;
         document.querySelector(`#current-${activePlayer}`).textContent = roundScore;
     } else {
-       nextPlayer();
+        nextPlayer();
     }
 });
 
 document.querySelector('.btn-hold').addEventListener('click', () => {
     scores[activePlayer] += roundScore;
-    
+
     document.querySelector(`#score-${activePlayer}`).textContent = scores[activePlayer];
 
     if (scores[activePlayer] >= 20) {
@@ -51,10 +43,10 @@ document.querySelector('.btn-hold').addEventListener('click', () => {
         nextPlayer();
     }
 
-  
+
 })
 
-function nextPlayer () {
+function nextPlayer() {
     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
     roundScore = 0;
 
@@ -68,6 +60,31 @@ function nextPlayer () {
     // document.querySelector('.player-1-panel').classList.add('active');
 
     document.querySelector('.dice').style.display = 'none';
+}
+
+document.querySelector('.btn-new').addEventListener('click', init);
+
+function init() {
+    scores = [0, 0];
+    activePlayer = 0;
+    roundScore = 0;
+
+    document.querySelector('.dice').style.display = 'none';
+
+    document.getElementById('score-0').textContent = '0';
+    document.getElementById('score-1').textContent = '0';
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+    document.getElementById(`name-0`).textContent = 'Player 1';
+    document.getElementById(`name-1`).textContent = 'Player 2';
+
+    document.querySelector(`.player-0-panel`).classList.remove('winner');
+    document.querySelector(`.player-1-panel`).classList.remove('winner');
+    
+    document.querySelector(`.player-0-panel`).classList.remove('active');
+    document.querySelector(`.player-1-panel`).classList.remove('active');
+
+    document.querySelector(`.player-0-panel`).classList.add('active');
 }
 
 
